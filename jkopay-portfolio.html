@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JKOPay O2O Product Suite — Jenny Hsiao</title>
+<style>
+  :root {
+    --navy:    #0F2041;
+    --blue:    #1A56DB;
+    --blue-lt: #EBF2FF;
+    --teal:    #0D9488;
+    --teal-lt: #CCFBF1;
+    --green:   #059669;
+    --green-lt:#D1FAE5;
+    --amber:   #D97706;
+    --amber-lt:#FEF3C7;
+    --gray-50: #F9FAFB;
+    --gray-100:#F3F4F6;
+    --gray-200:#E5E7EB;
+    --gray-400:#9CA3AF;
+    --gray-600:#4B5563;
+    --gray-800:#1F2937;
+    --white:   #FFFFFF;
+    --shadow:  0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,.10);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: var(--gray-50);
+    color: var(--gray-800);
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--navy);
+    color: white;
+    padding: 56px 0 60px;
+  }
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+    border-radius: 20px; padding: 6px 14px;
+    font-size: 12px; font-weight: 500; letter-spacing: .3px;
+    color: rgba(255,255,255,.85); margin-bottom: 20px;
+  }
+  .badge .dot { width: 6px; height: 6px; border-radius: 50%; background: #34D399; }
+
+  header h1 {
+    font-size: 42px; font-weight: 700; line-height: 1.15;
+    letter-spacing: -.5px; margin-bottom: 10px;
+  }
+  header h1 span { color: #60AEFF; }
+
+  header .sub {
+    font-size: 17px; color: rgba(255,255,255,.65); margin-bottom: 40px;
+    max-width: 600px;
+  }
+
+  .kpi-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .kpi {
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
+    border-radius: 12px; padding: 20px 24px;
+  }
+  .kpi .num { font-size: 32px; font-weight: 700; color: #60AEFF; line-height: 1; }
+  .kpi .lbl { font-size: 13px; color: rgba(255,255,255,.6); margin-top: 4px; }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-200);
+    position: sticky; top: 0; z-index: 100;
+  }
+  nav .nav-inner {
+    max-width: 1080px; margin: 0 auto; padding: 0 32px;
+    display: flex; gap: 0; overflow-x: auto;
+  }
+  nav a {
+    display: block; padding: 14px 18px;
+    font-size: 13px; font-weight: 500; color: var(--gray-600);
+    text-decoration: none; white-space: nowrap; border-bottom: 2px solid transparent;
+    transition: color .15s, border-color .15s;
+  }
+  nav a:hover { color: var(--blue); border-color: var(--blue); }
+
+  /* ── SECTIONS ── */
+  section { padding: 64px 0; }
+  section:nth-child(even) { background: var(--white); }
+
+  .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+    color: var(--blue); margin-bottom: 8px;
+  }
+  h2 {
+    font-size: 28px; font-weight: 700; color: var(--navy);
+    line-height: 1.2; margin-bottom: 8px;
+  }
+  .section-desc { font-size: 16px; color: var(--gray-600); max-width: 600px; margin-bottom: 40px; }
+
+  /* ── PROBLEM ── */
+  .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .problem-card {
+    border-radius: 12px; padding: 28px;
+    border: 1.5px solid var(--gray-200);
+  }
+  .problem-card.before { background: #FFF8F8; border-color: #FECACA; }
+  .problem-card.after  { background: var(--blue-lt); border-color: #BFDBFE; }
+  .problem-card .card-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .problem-card.before .card-label { color: #DC2626; }
+  .problem-card.after  .card-label { color: var(--blue); }
+  .problem-card h3 { font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+  .problem-card p  { font-size: 14px; color: var(--gray-600); line-height: 1.6; }
+
+  .constraint-box {
+    background: var(--amber-lt); border: 1.5px solid #FDE68A;
+    border-radius: 12px; padding: 24px 28px; margin-top: 20px;
+  }
+  .constraint-box .c-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--amber); margin-bottom: 8px;
+  }
+  .constraint-box p { font-size: 14px; color: #92400E; line-height: 1.6; }
+  .constraint-box strong { color: #78350F; }
+
+  /* ── PRINCIPLES ── */
+  .principles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .principle-card {
+    background: var(--white); border: 1.5px solid var(--gray-200);
+    border-radius: 12px; padding: 28px;
+    transition: box-shadow .2s, border-color .2s, transform .2s;
+  }
+  .principle-card:hover {
+    box-shadow: var(--shadow-lg); border-color: var(--blue);
+    transform: translateY(-2px);
+  }
+  .principle-num {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: var(--blue); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 700; margin-bottom: 16px;
+  }
+  .principle-card h3 { font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+  .principle-card p  { font-size: 14px; color: var(--gray-600); line-height: 1.6; }
+  .principle-card .insight {
+    margin-top: 14px; padding: 10px 14px;
+    background: var(--blue-lt); border-radius: 8px;
+    font-size: 13px; color: var(--blue); font-style: italic;
+  }
+
+  /* ── PRODUCTS TIMELINE ── */
+  .timeline { position: relative; }
+  .timeline-line {
+    position: absolute; left: 40px; top: 0; bottom: 0;
+    width: 2px; background: var(--gray-200);
+  }
+  .tl-item { display: flex; gap: 24px; margin-bottom: 28px; }
+  .tl-dot-wrap {
+    flex-shrink: 0; width: 80px; display: flex;
+    flex-direction: column; align-items: center;
+  }
+  .tl-dot {
+    width: 20px; height: 20px; border-radius: 50%;
+    border: 3px solid var(--white); background: var(--blue);
+    box-shadow: 0 0 0 3px var(--blue);
+    margin-top: 24px; z-index: 1; position: relative;
+  }
+  .tl-seq {
+    font-size: 10px; font-weight: 700; color: var(--gray-400);
+    text-transform: uppercase; margin-top: 8px;
+  }
+
+  .tl-card {
+    flex: 1; background: var(--white); border: 1.5px solid var(--gray-200);
+    border-radius: 12px; padding: 24px 28px;
+    transition: box-shadow .2s; cursor: default;
+  }
+  .tl-card:hover { box-shadow: var(--shadow-lg); }
+
+  .tl-card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px; }
+  .tl-card h3 { font-size: 18px; font-weight: 700; color: var(--navy); }
+  .tl-card .tl-tag {
+    font-size: 11px; font-weight: 700; padding: 4px 10px;
+    border-radius: 20px; white-space: nowrap;
+  }
+  .tag-green { background: var(--green-lt); color: var(--green); }
+  .tag-blue  { background: var(--blue-lt);  color: var(--blue); }
+  .tag-teal  { background: var(--teal-lt);  color: var(--teal); }
+  .tag-amber { background: var(--amber-lt); color: var(--amber); }
+
+  .tl-card .reason {
+    font-size: 13px; font-weight: 600; color: var(--gray-600);
+    margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+  }
+  .tl-card .reason::before {
+    content: '↳'; color: var(--blue); font-size: 14px;
+  }
+  .tl-card p { font-size: 14px; color: var(--gray-600); line-height: 1.6; margin-bottom: 12px; }
+  .tl-metric {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--green-lt); color: var(--green);
+    border-radius: 8px; padding: 6px 12px;
+    font-size: 13px; font-weight: 700;
+  }
+
+  /* ── ARCHITECTURE ── */
+  .arch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+
+  .flow-box {
+    background: var(--white); border: 1.5px solid var(--gray-200);
+    border-radius: 12px; padding: 28px;
+  }
+  .flow-box h3 { font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .flow-box .flow-sub { font-size: 13px; color: var(--gray-400); margin-bottom: 24px; }
+
+  .flow-step {
+    display: flex; align-items: flex-start; gap: 14px; margin-bottom: 6px;
+  }
+  .flow-step-content {
+    flex: 1; background: var(--gray-50); border: 1px solid var(--gray-200);
+    border-radius: 10px; padding: 14px 16px;
+  }
+  .flow-step-content .fs-label {
+    font-size: 10px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase;
+    color: var(--gray-400); margin-bottom: 4px;
+  }
+  .flow-step-content .fs-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+  .flow-step-content .fs-desc  { font-size: 13px; color: var(--gray-600); }
+
+  .flow-step-num {
+    width: 28px; height: 28px; border-radius: 8px;
+    background: var(--blue); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; flex-shrink: 0; margin-top: 12px;
+  }
+
+  .flow-arrow {
+    text-align: center; color: var(--gray-400); font-size: 18px;
+    margin: 4px 0; margin-left: 14px;
+  }
+
+  .fund-priority {
+    display: flex; flex-direction: column; gap: 10px; margin-top: 16px;
+  }
+  .fp-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px; border-radius: 10px;
+    border: 1px solid var(--gray-200); background: var(--gray-50);
+  }
+  .fp-rank {
+    width: 24px; height: 24px; border-radius: 6px;
+    background: var(--navy); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; flex-shrink: 0;
+  }
+  .fp-item .fp-name { font-size: 14px; font-weight: 600; color: var(--navy); }
+  .fp-item .fp-note { font-size: 12px; color: var(--gray-400); margin-top: 1px; }
+  .fp-arrow { color: var(--gray-300); font-size: 14px; }
+
+  /* ── IMPACT ── */
+  .impact-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+  .impact-card {
+    background: var(--white); border: 1.5px solid var(--gray-200);
+    border-radius: 12px; padding: 24px;
+    transition: box-shadow .2s;
+  }
+  .impact-card:hover { box-shadow: var(--shadow); }
+  .impact-card .imp-num {
+    font-size: 28px; font-weight: 800; color: var(--navy);
+    line-height: 1; margin-bottom: 6px;
+  }
+  .impact-card .imp-num span { color: var(--blue); }
+  .impact-card .imp-lbl { font-size: 13px; color: var(--gray-600); }
+  .impact-card .imp-sub { font-size: 11px; color: var(--gray-400); margin-top: 2px; }
+
+  .bonus-box {
+    background: linear-gradient(135deg, #FEF3C7 0%, #DBEAFE 100%);
+    border: 1.5px solid #FDE68A; border-radius: 16px; padding: 32px;
+  }
+  .bonus-box .bonus-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--amber); margin-bottom: 10px;
+  }
+  .bonus-box h3 { font-size: 20px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .bonus-box .bonus-desc { font-size: 14px; color: var(--gray-600); margin-bottom: 24px; }
+  .bonus-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  .b-stat {
+    background: rgba(255,255,255,.7); border-radius: 10px; padding: 14px;
+    text-align: center;
+  }
+  .b-stat .b-num { font-size: 20px; font-weight: 800; color: var(--navy); }
+  .b-stat .b-lbl { font-size: 11px; color: var(--gray-600); margin-top: 2px; }
+
+  /* ── LESSON ── */
+  .lesson-box {
+    background: var(--navy); color: white; border-radius: 16px; padding: 40px;
+  }
+  .lesson-box .lesson-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+    color: #60AEFF; margin-bottom: 12px;
+  }
+  .lesson-box p { font-size: 17px; line-height: 1.7; color: rgba(255,255,255,.85); }
+  .lesson-box p strong { color: white; }
+  .lesson-box .comp-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+  .comp-tag {
+    background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+    color: rgba(255,255,255,.75); border-radius: 20px;
+    padding: 5px 14px; font-size: 13px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--gray-100); border-top: 1px solid var(--gray-200);
+    padding: 32px 0; text-align: center;
+  }
+  footer p { font-size: 14px; color: var(--gray-400); }
+  footer a { color: var(--blue); text-decoration: none; }
+
+  /* ── QUOTE ── */
+  .quote-box {
+    background: var(--blue-lt); border-left: 4px solid var(--blue);
+    border-radius: 0 10px 10px 0; padding: 16px 20px; margin-top: 20px;
+  }
+  .quote-box p { font-size: 14px; color: var(--navy); font-style: italic; line-height: 1.6; }
+  .quote-box .attr { font-size: 12px; color: var(--gray-400); margin-top: 8px; font-style: normal; }
+
+  @media (max-width: 768px) {
+    header h1 { font-size: 28px; }
+    .kpi-row { grid-template-columns: 1fr; }
+    .problem-grid, .principles-grid, .arch-grid { grid-template-columns: 1fr; }
+    .impact-grid { grid-template-columns: repeat(2, 1fr); }
+    .bonus-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     HEADER
+══════════════════════════════════════════ -->
+<header>
+  <div class="container">
+    <div class="badge"><span class="dot"></span> JKOPay · Taiwan's #1 Regulated Payments Platform · 6M+ users · 50%+ market share</div>
+    <h1>Turning a Payments App<br>into a <span>Daily-Life Super-App</span></h1>
+    <p class="sub">How I launched four regulated payment categories in 12 months — and grew MAU 200% in two weeks.</p>
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="num">200%</div>
+        <div class="lbl">MAU growth within 2 weeks of bill-pay launch</div>
+      </div>
+      <div class="kpi">
+        <div class="num">$2.1M</div>
+        <div class="lbl">Revenue generated in the first two weeks</div>
+      </div>
+      <div class="kpi">
+        <div class="num">4 in 12</div>
+        <div class="lbl">Regulated payment categories shipped in 12 months</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════
+     NAV
+══════════════════════════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <a href="#problem">The Problem</a>
+    <a href="#principles">My Framework</a>
+    <a href="#products">4 Products</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#impact">Impact</a>
+    <a href="#lesson">Transferable Lesson</a>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     SECTION 1 — THE STRATEGIC PROBLEM
+══════════════════════════════════════════ -->
+<section id="problem">
+  <div class="container">
+    <div class="section-label">The Strategic Problem</div>
+    <h2>The "Weekend-Only Wallet" Risk</h2>
+    <p class="section-desc">JKOPay dominated QR payments at night markets and convenience stores — but users weren't opening the app for everyday payments. Leadership asked: how do we deepen daily-use frequency before a super-app competitor fills that gap?</p>
+
+    <div class="problem-grid">
+      <div class="problem-card before">
+        <div class="card-label">⚠ Before: The Reality</div>
+        <h3>High market share, low daily engagement</h3>
+        <p>6M+ registered users. 50%+ market share in QR payments. But usage was concentrated at point-of-sale — night markets, convenience stores, weekend shopping. The app lived in users' "occasional use" mental model, not their daily routine. That made retention fragile and opened the door for super-app competitors to displace us entirely.</p>
+      </div>
+      <div class="problem-card after">
+        <div class="card-label">✦ The Strategic Goal</div>
+        <h3>Expand into daily-use payment categories</h3>
+        <p>Four categories where payment is a recurring, habitual need: <strong>bill pay</strong> (utilities, fines, government fees), <strong>taxi</strong> (daily commuting), <strong>fuel tax</strong> (annual sticky payment), <strong>charity</strong> (brand and engagement). If we could make JKOPay the app users reach for when a payment need arises — not just at checkout — the frequency problem solves itself.</p>
+      </div>
+    </div>
+
+    <div class="constraint-box">
+      <div class="c-label">⚡ The Constraint That Made This Hard</div>
+      <p>Taiwan's Electronic Payment Act required <strong>FSC regulator sign-off on each new payment category</strong>. Partner integrations needed to satisfy bank and government counterparties. The trust-account architecture (managing bank + 25 partner banks) had operational rigour we couldn't shortcut. The org's natural cadence: one new category every 6–9 months. My target: <strong>four categories in 12 months</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 2 — MY FRAMEWORK
+══════════════════════════════════════════ -->
+<section id="principles">
+  <div class="container">
+    <div class="section-label">My PM Framework</div>
+    <h2>Three Principles That Shaped Every Decision</h2>
+    <p class="section-desc">I didn't treat this as four separate launches. I treated it as one product system with shared architecture, shared regulatory precedent, and a sequencing strategy designed to compress a 36-month roadmap into 12.</p>
+
+    <div class="principles-grid">
+      <div class="principle-card">
+        <div class="principle-num">1</div>
+        <h3>Sequence by regulatory friction — not revenue</h3>
+        <p>The natural instinct is to launch the highest-revenue category first. In a regulated environment that's wrong. <strong>Each successful category approval creates a regulatory precedent</strong> that makes the next approval faster. Sequence the easiest approval first, accumulate precedent, then tackle the harder ones.</p>
+        <div class="insight">Lead with Charity (lowest friction) → build towards Taxi (most complex authorisation flow)</div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-num">2</div>
+        <h3>Parallelise approvals — never stack them</h3>
+        <p>Default org behaviour: wait for one approval letter before filing the next submission. I broke this. <strong>File all four regulatory submissions in week one. Run a stop-light review every Friday with regulatory ops.</strong> Build engineering against the expected approval shape — accept some rework risk in exchange for 6 months of time-to-market compression.</p>
+        <div class="insight">Parallel regulatory tracks → shipped 4 categories in 12 months vs. org's natural 24–36 month pace</div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-num">3</div>
+        <h3>Design primitives — not point features</h3>
+        <p>Every category launch produced one reusable payment primitive: the <strong>two-step auth/capture flow</strong> (built for taxi, reused by all future recurring-payment products), the <strong>recurring authorisation priority stack</strong> (fund-source fallback chain), and the <strong>idempotency key pattern</strong> across all four flows. Second and third product launches were dramatically cheaper to build.</p>
+        <div class="insight">The taxi two-step capture became the foundation for all subscription billing products that followed</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 3 — THE FOUR PRODUCTS
+══════════════════════════════════════════ -->
+<section id="products">
+  <div class="container">
+    <div class="section-label">Product Sequencing</div>
+    <h2>Four Categories — One Deliberate Order</h2>
+    <p class="section-desc">The order wasn't arbitrary. Each launch was chosen because of what it contributed to the next: regulatory precedent, technical primitives, or product trust with users.</p>
+
+    <div class="timeline">
+      <div class="timeline-line"></div>
+
+      <!-- CHARITY -->
+      <div class="tl-item">
+        <div class="tl-dot-wrap">
+          <div class="tl-dot"></div>
+          <div class="tl-seq">First</div>
+        </div>
+        <div class="tl-card">
+          <div class="tl-card-header">
+            <h3>🤝 Charity Donations (公益捐款)</h3>
+            <span class="tl-tag tag-green">Lowest Regulatory Friction</span>
+          </div>
+          <div class="reason">Why first: build regulatory precedent, brand halo, and team confidence with the simplest possible payment flow</div>
+          <p>Charity partners receive an API and QR code for donation collection. Users apply JKOPay coupons to donations — subsidised by JKOPay marketing budget — turning a simple feature into a brand-halo lever. No complex settlement requirements. No government counterparty reconciliation. Maximum learning value for minimum regulatory risk.</p>
+          <p><strong>What it gave the next launch:</strong> FSC familiarity with JKOPay's payment category expansion pattern. Cleared the path for government-facing bill pay.</p>
+        </div>
+      </div>
+
+      <!-- BILL PAY -->
+      <div class="tl-item">
+        <div class="tl-dot-wrap">
+          <div class="tl-dot"></div>
+          <div class="tl-seq">Second</div>
+        </div>
+        <div class="tl-card">
+          <div class="tl-card-header">
+            <h3>🧾 Bill Pay (繳費)</h3>
+            <span class="tl-tag tag-blue">Volume Engine</span>
+          </div>
+          <div class="reason">Why second: highest daily-frequency use case — utilities, fines, government fees. The single biggest driver of habitual engagement.</div>
+          <p>Integrated with Taiwan's government <strong>Omni-U Link 繳費API</strong>. Categories: utility bills, traffic fines, other government fees, health insurance contributions. User flow: scan barcode on physical bill → JKOPay parses payee and amount → confirm → pay via account balance, linked card, or stored value. Single-step capture (amount fixed by the bill itself).</p>
+          <p><strong>Technical design:</strong> All settlement routed through the trust account at the managing bank + 25 partner-bank network. Idempotency key on every payment to protect against duplicate submission on the government reconciliation side.</p>
+          <div class="tl-metric">📊 200% MAU growth within 2 weeks of launch</div>
+        </div>
+      </div>
+
+      <!-- FUEL TAX -->
+      <div class="tl-item">
+        <div class="tl-dot-wrap">
+          <div class="tl-dot"></div>
+          <div class="tl-seq">Third</div>
+        </div>
+        <div class="tl-card">
+          <div class="tl-card-header">
+            <h3>⛽ Fuel Tax (燃料稅)</h3>
+            <span class="tl-tag tag-teal">Sticky Recurring</span>
+          </div>
+          <div class="reason">Why third: piggybacks entirely on bill-pay infrastructure. Annual recurring payment = natural retention anchor.</div>
+          <p>Built on the bill-pay integration with a <strong>calendar reminder and one-tap repeat workflow</strong>. No new regulatory category required — fuel tax is a subset of the government-fee category already approved. Engineering cost was minimal (leveraged the bill-pay pipeline completely). Added a "pay again next year" save state, surfacing the product at the right annual moment.</p>
+          <p><strong>Lesson learned:</strong> Adoption was lower than projected — most users paid fuel tax through their car-insurance broker rather than directly. Should have validated the user's existing workflow before committing to standalone product design.</p>
+        </div>
+      </div>
+
+      <!-- TAXI -->
+      <div class="tl-item">
+        <div class="tl-dot-wrap">
+          <div class="tl-dot"></div>
+          <div class="tl-seq">Fourth</div>
+        </div>
+        <div class="tl-card">
+          <div class="tl-card-header">
+            <h3>🚖 Taxi — Taiwan Taxi Co (叫車)</h3>
+            <span class="tl-tag tag-amber">Two-Step Capture Flagship</span>
+          </div>
+          <div class="reason">Why last: most complex authorisation flow. Partnership with Taiwan's largest taxi fleet (台灣大車隊). Required building a new payment primitive from scratch.</div>
+          <p>Unlike the first three (fixed-amount capture), taxi required a <strong>pre-auth at trip start → capture at trip end</strong> flow because the final fare is only known when the trip ends. This meant designing the two-step capture as a generic primitive — not a taxi-only feature — with full idempotency, cancellation void paths, and fallback handling.</p>
+          <p><strong>UX differentiation (vs Uber):</strong> Launched without Uber-parity map UI (would have taken 9–12 months). Shipped with two killer differentiators instead: <strong>fare estimation</strong> (Uber didn't offer reliably in Taiwan) + <strong>one-tap favourite trips</strong>. Won on functional differentiation; map UX caught up in the next two quarters.</p>
+          <div class="tl-metric">🔧 Two-step capture became the recurring-payment primitive for all subscription products</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 4 — ARCHITECTURE
+══════════════════════════════════════════ -->
+<section id="architecture">
+  <div class="container">
+    <div class="section-label">Technical Architecture</div>
+    <h2>Two Reusable Primitives I Designed</h2>
+    <p class="section-desc">The product value wasn't just in the four launches — it was in the shared technical primitives underneath them that made every subsequent regulated payment product cheaper and faster to build.</p>
+
+    <div class="arch-grid">
+
+      <!-- Two-step capture -->
+      <div class="flow-box">
+        <h3>Primitive 1: Two-Step Auth/Capture Flow</h3>
+        <div class="flow-sub">Designed for Taxi · Reused by all future recurring-payment products</div>
+
+        <div class="flow-step">
+          <div class="flow-step-num">1</div>
+          <div class="flow-step-content">
+            <div class="fs-label">Trip Start — Pre-Auth</div>
+            <div class="fs-title">Reserve max fare amount</div>
+            <div class="fs-desc">Idempotency key = <code>trip_id</code>. Holds funds in trust account. User sees "payment reserved" — not charged yet.</div>
+          </div>
+        </div>
+
+        <div class="flow-arrow">↓</div>
+
+        <div class="flow-step">
+          <div class="flow-step-num">2</div>
+          <div class="flow-step-content">
+            <div class="fs-label">In-Trip</div>
+            <div class="fs-title">Fare meter runs independently</div>
+            <div class="fs-desc">Taxi fleet system (Taiwan Taxi Co API) calculates distance-based fare. No payment interaction needed.</div>
+          </div>
+        </div>
+
+        <div class="flow-arrow">↓</div>
+
+        <div class="flow-step">
+          <div class="flow-step-num">3</div>
+          <div class="flow-step-content">
+            <div class="fs-label">Trip End — Capture</div>
+            <div class="fs-title">Capture final amount (≤ pre-auth)</div>
+            <div class="fs-desc">If final fare &lt; reserved amount, excess is immediately voided. Single settlement to managing bank.</div>
+          </div>
+        </div>
+
+        <div class="flow-arrow">↓</div>
+
+        <div class="flow-step">
+          <div class="flow-step-num">✓</div>
+          <div class="flow-step-content" style="background:#D1FAE5; border-color:#6EE7B7;">
+            <div class="fs-label">Cancellation Path</div>
+            <div class="fs-title">Void pre-auth → full release</div>
+            <div class="fs-desc">Cancellation at any stage fully releases the pre-auth. No manual reconciliation needed.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fund priority -->
+      <div class="flow-box">
+        <h3>Primitive 2: Recurring Auth Priority Stack</h3>
+        <div class="flow-sub">Configurable fund-source priority · Idempotency-safe across retries</div>
+
+        <p style="font-size:14px; color:var(--gray-600); margin-bottom:20px;">When a user has multiple fund sources (account balance, linked card, stored value), which one gets debited first? Rather than hardcoding this, I designed a <strong>merchant-configurable priority stack with automatic fallback</strong> — so each payment partner could define their own preferred order, and the system cascades down if the primary source fails.</p>
+
+        <div class="fund-priority">
+          <div class="fp-item">
+            <div class="fp-rank">P1</div>
+            <div>
+              <div class="fp-name">Account Balance</div>
+              <div class="fp-note">JKOPay stored value — lowest transaction cost</div>
+            </div>
+          </div>
+          <div style="text-align:center; color:var(--gray-300); font-size:13px; padding:2px 0;">↓ fallback if insufficient</div>
+          <div class="fp-item">
+            <div class="fp-rank">P2</div>
+            <div>
+              <div class="fp-name">Linked Bank Card</div>
+              <div class="fp-note">Debit or credit card — higher coverage</div>
+            </div>
+          </div>
+          <div style="text-align:center; color:var(--gray-300); font-size:13px; padding:2px 0;">↓ fallback if declined</div>
+          <div class="fp-item">
+            <div class="fp-rank">P3</div>
+            <div>
+              <div class="fp-name">Stored Value / Points</div>
+              <div class="fp-note">Merchant reward credit or JKOPay points</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quote-box" style="margin-top:20px;">
+          <p>"Priority is configurable per payment partner — a taxi operator may prefer card-first for reconciliation simplicity, while a bill-pay government counterparty prefers balance-first to minimise interchange cost."</p>
+          <div class="attr">— Design rationale from the authorisation spec I owned</div>
+        </div>
+
+        <p style="font-size:13px; color:var(--gray-500); margin-top:16px;">This primitive became the foundation for the <strong>subscription billing module</strong> built in the quarter following my 12-month O2O rollout.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 5 — IMPACT
+══════════════════════════════════════════ -->
+<section id="impact">
+  <div class="container">
+    <div class="section-label">Results</div>
+    <h2>Impact Across the 12-Month Rollout</h2>
+    <p class="section-desc">Core O2O metrics plus a follow-on gamification campaign that demonstrated the platform's new daily-use potential.</p>
+
+    <div class="impact-grid">
+      <div class="impact-card">
+        <div class="imp-num"><span>+200%</span></div>
+        <div class="imp-lbl">MAU growth</div>
+        <div class="imp-sub">Within 2 weeks of bill-pay launch</div>
+      </div>
+      <div class="impact-card">
+        <div class="imp-num"><span>$2.1M</span></div>
+        <div class="imp-lbl">USD revenue</div>
+        <div class="imp-sub">Bill-pay revenue in first 2 weeks</div>
+      </div>
+      <div class="impact-card">
+        <div class="imp-num"><span>4</span></div>
+        <div class="imp-lbl">Categories launched in 12 months</div>
+        <div class="imp-sub">vs. org's natural 24–36 month pace</div>
+      </div>
+      <div class="impact-card">
+        <div class="imp-num"><span>+20%</span></div>
+        <div class="imp-lbl">Payment funnel visibility</div>
+        <div class="imp-sub">Via Mixpanel event-level analytics rollout</div>
+      </div>
+    </div>
+
+    <!-- 1212 bonus -->
+    <div class="bonus-box">
+      <div class="bonus-label">🎮 Bonus: 1212 Shopping Festival 2020</div>
+      <h3>Gamification on top of the O2O platform — DAU up 35% in 10 days</h3>
+      <p class="bonus-desc">Using the mission/quest framework I designed and shipped during this period, JKOPay ran a 10-day gamified shopping festival. The results validated that the O2O platform could drive sustained engagement — not just one-off transactional use.</p>
+      <div class="bonus-grid">
+        <div class="b-stat">
+          <div class="b-num">+35%</div>
+          <div class="b-lbl">App DAU<br>260K → 350K</div>
+        </div>
+        <div class="b-stat">
+          <div class="b-num">3→5</div>
+          <div class="b-lbl">Transactions/user<br>in 10 days</div>
+        </div>
+        <div class="b-stat">
+          <div class="b-num">47%</div>
+          <div class="b-lbl">Day-1 retention<br>vs 25% baseline</div>
+        </div>
+        <div class="b-stat">
+          <div class="b-num">5×</div>
+          <div class="b-lbl">Account-Link<br>bank binding lift</div>
+        </div>
+        <div class="b-stat">
+          <div class="b-num">$3M</div>
+          <div class="b-lbl">USD volume<br>on 12/12 alone</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     SECTION 6 — LESSON
+══════════════════════════════════════════ -->
+<section id="lesson">
+  <div class="container">
+    <div class="section-label">Transferable Insight</div>
+    <h2>What This Translates to in European Fintech</h2>
+
+    <div class="lesson-box">
+      <div class="lesson-label">The Core Pattern</div>
+      <p>
+        In regulated environments, you ship at the speed of the slowest legal review. The only way to compress that is to <strong>parallelise approvals, not stack them</strong> — build engineering against the expected approval shape, run stop-light governance weekly, and accept some rework risk in exchange for time-to-market.
+        <br><br>
+        This is the same metabolism <strong>Wise uses for new payment corridor launches</strong>, <strong>Revolut used for its UK banking licence mobilisation</strong> (20 months with parallel product workstreams running throughout), and <strong>Checkout.com uses for new-market acquirer setups</strong>. The specific regulations differ; the operating discipline is identical.
+        <br><br>
+        And underneath the launches: <strong>design primitives, not point features</strong>. The two-step capture I built for taxi wasn't a taxi feature — it was a recurring-payment primitive that every subsequent product reused. In fintech, the products that scale fastest are the ones where each launch leaves behind a reusable layer for the next.
+      </p>
+      <div class="comp-tags">
+        <span class="comp-tag">Wise — corridor launch parallelisation</span>
+        <span class="comp-tag">Revolut — regulated banking licence mobilisation</span>
+        <span class="comp-tag">Checkout.com — acquirer market setup</span>
+        <span class="comp-tag">Stripe — payment primitive reuse</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <p>Jenny (Wei Ling) Hsiao · Cambridge MBA 2026 · Targeting fintech PM roles in London</p>
+    <p style="margin-top:6px;">
+      <a href="mailto:wlh32@jbs.cam.ac.uk">wlh32@jbs.cam.ac.uk</a> ·
+      <a href="tel:+447957463498">+44 7957 463498</a>
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
