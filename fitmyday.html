@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fit My Day — Jenny Hsiao</title>
+<meta name="description" content="Fit My Day: choosing the right AI for each job. An AI PM portfolio by Jenny Hsiao.">
+<style>
+:root{
+  --bg:#FAFAF7;--surface:#FFFFFF;--ink:#1B1F24;--muted:#5B6470;--line:#E4E4DE;
+  --accent:#0F766E;--accent-soft:#DDF3EF;--warn:#B45309;--warn-soft:#FDF0DC;
+  --hero:#10302C;--hero-ink:#F2FBF8;--hero-muted:rgba(242,251,248,.7);--chip:#EEF0EC;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#111415;--surface:#191D1F;--ink:#E7EAEA;--muted:#9AA4A8;--line:#2A3033;
+  --accent:#4FD1BE;--accent-soft:#16332F;--warn:#F2B866;--warn-soft:#33281A;
+  --hero:#0B1F1C;--chip:#22282A;}}
+:root[data-theme="dark"]{
+  --bg:#111415;--surface:#191D1F;--ink:#E7EAEA;--muted:#9AA4A8;--line:#2A3033;
+  --accent:#4FD1BE;--accent-soft:#16332F;--warn:#F2B866;--warn-soft:#33281A;
+  --hero:#0B1F1C;--chip:#22282A;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;font-size:16px}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+a{color:var(--accent)}
+header{background:var(--hero);color:var(--hero-ink);padding:64px 0 56px}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--hero-muted);margin-bottom:16px}
+header h1{font-size:clamp(30px,5vw,46px);line-height:1.12;letter-spacing:-.5px;margin-bottom:14px}
+header h1 em{font-style:normal;color:#5EEAD4}
+.hook{font-size:19px;color:var(--hero-muted);max-width:620px;margin-bottom:36px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.kpi{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);border-radius:12px;padding:16px 18px}
+.kpi b{display:block;font-size:28px;color:#5EEAD4;line-height:1.1}
+.kpi span{font-size:13px;color:var(--hero-muted)}
+nav{position:sticky;top:0;z-index:10;background:var(--surface);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;overflow-x:auto;gap:4px;scrollbar-width:none}
+nav a{padding:13px 12px;font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;white-space:nowrap;border-bottom:2px solid transparent}
+nav a:hover{color:var(--accent);border-color:var(--accent)}
+section{padding:56px 0;border-bottom:1px solid var(--line)}
+.num{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+h2{font-size:clamp(22px,3.4vw,28px);line-height:1.25;margin-bottom:10px}
+h3{font-size:17px;margin:4px 0 8px}
+.lede{color:var(--muted);font-size:17px;max-width:680px;margin-bottom:28px}
+p+p{margin-top:10px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px}
+.card p,.card li{font-size:15px;color:var(--muted)}
+.card ul{padding-left:18px}
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--chip);color:var(--muted);margin-bottom:8px}
+.tag.mvp{background:var(--accent-soft);color:var(--accent)}
+.tag.future{background:var(--warn-soft);color:var(--warn)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:560px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);font-weight:600;background:var(--chip)}
+tr:last-child td{border-bottom:0}
+td.n{font-weight:700;color:var(--accent);white-space:nowrap}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:20px 0 24px}
+.flow span{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:13px;font-weight:500}
+.flow span.hi{border-color:var(--accent);color:var(--accent)}
+.flow i{font-style:normal;color:var(--muted)}
+.callout{border-left:3px solid var(--accent);background:var(--accent-soft);padding:14px 18px;border-radius:0 10px 10px 0;margin:18px 0;font-size:15px}
+.callout.warn{border-color:var(--warn);background:var(--warn-soft)}
+.demo{aspect-ratio:16/9;border:2px dashed var(--line);border-radius:14px;display:grid;place-items:center;text-align:center;color:var(--muted);background:var(--surface);padding:20px;margin-bottom:18px}
+.small{font-size:13px;color:var(--muted)}
+footer{padding:40px 0 56px;color:var(--muted);font-size:14px}
+@media (max-width:600px){header{padding:44px 0 40px}section{padding:40px 0}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow">AI PM portfolio · Jenny Hsiao · PM Accelerator AI PM bootcamp</div>
+    <h1>Fit My Day: choosing the <em>right AI</em> for each job</h1>
+    <p class="hook">YouTube has the videos. Fit My Day builds today's plan — a ready-to-play Stack of 1–3 trusted workout videos that fits your time, body focus and equipment.</p>
+    <div class="kpis">
+      <div class="kpi"><b>88%</b><span>of core users search fresh every workout</span></div>
+      <div class="kpi"><b>&lt;3 s</b><span>to generate a Stack, vs 5+ min choosing</span></div>
+      <div class="kpi"><b>127</b><span>engine tests passed, independently verified</span></div>
+      <div class="kpi"><b>0</b><span>LLM calls in the MVP — rules first, AI must beat them</span></div>
+    </div>
+  </div>
+</header>
+
+<nav><div class="wrap">
+  <a href="#demo">Demo</a><a href="#problem">Problem</a><a href="#vision">Vision</a><a href="#user">User</a><a href="#competition">Competition</a><a href="#system">AI system</a><a href="#models">Models</a><a href="#pipeline">Data pipeline</a><a href="#features">AI features</a><a href="#eval">Evaluation</a><a href="#results">Results</a><a href="#progress">Progress</a><a href="#why">Why not YouTube</a><a href="#business">Business</a><a href="#roadmap">Roadmap</a><a href="#risks">Risks &amp; decisions</a>
+</div></nav>
+
+<main>
+
+<section id="demo"><div class="wrap">
+  <div class="num">01 · Hook and demo</div>
+  <h2>A working product, shipped by a six-person team</h2>
+  <p class="lede">Pick 30 minutes and Glutes. A 1–3 video Stack appears in under 3 seconds with its real duration. Apply <em>No jumping</em> and <em>Mat only</em>, swap one video, press play, and rate it Too easy, Just right or Too hard.</p>
+  <div class="demo"><div><strong>Demo video coming after Demo Day</strong><br><span class="small">60–90 seconds, one take: builder → Stack → filters → swap → player → feedback</span></div></div>
+  <p class="small">Screenshots to follow: builder, generated Stack, filters, a “no valid Stack” message that names the limiting filter, player, feedback, History and a shared workout preview.</p>
+</div></section>
+
+<section id="problem"><div class="wrap">
+  <div class="num">02 · Problem and evidence</div>
+  <h2>Endless free videos, but every session is rebuilt from scratch</h2>
+  <p class="lede">88% of core users search fresh each time, and 44% take 5+ minutes to choose. In interviews, 10 of 10 described spending 5+ minutes deciding and falling back on the same routine.</p>
+  <div class="tablewrap"><table>
+    <tr><th>Finding</th><th>Core users (n = 16)</th></tr>
+    <tr><td>Search fresh every time they work out</td><td class="n">88%</td></tr>
+    <tr><td>Take 5+ minutes from deciding to pressing play</td><td class="n">44%</td></tr>
+    <tr><td>Choose by time / body part / energy</td><td class="n">81% / 75% / 50%</td></tr>
+    <tr><td>Ads make it hard to start or finish</td><td class="n">50%</td></tr>
+    <tr><td>Cannot decide what to do</td><td class="n">44%</td></tr>
+    <tr><td>Cannot find a video that fits their time</td><td class="n">44%</td></tr>
+    <tr><td>Have no YouTube Premium</td><td class="n">81%</td></tr>
+    <tr><td>Don't mind who built a routine, if it suits them</td><td class="n">63%</td></tr>
+    <tr><td>Usually work out for 20–45 minutes</td><td class="n">75%</td></tr>
+    <tr><td>Would join the pilot</td><td class="n">63%</td></tr>
+  </table></div>
+  <p class="small" style="margin-top:12px">Base: 61 survey responses (11–14 Aug 2026), 37 qualified, 16 core target users (worked out in the past 7 days, 2–4 times a week). With n = 16, figures are directional.</p>
+</div></section>
+
+<section id="vision"><div class="wrap">
+  <div class="num">03 · Vision</div>
+  <h2>Start the right session in under a minute</h2>
+  <div class="callout">Help people who work out at home with YouTube start the right session in under a minute, see how far they've come, and build a practice that gets better every time.<br><span class="small">幫助在家跟著 YouTube 運動的人，一分鐘內開始適合今天的運動，看見自己一路走來的進步，讓每一次的練習都比上一次更貼近自己。</span></div>
+  <div class="grid">
+    <div class="card"><span class="tag mvp">Entry point</span><h3>The right session in &lt;60 s</h3><p>Backed by survey and interview evidence; tested at Demo Day.</p></div>
+    <div class="card"><span class="tag">Retention</span><h3>Seeing your own progress</h3><p>Hypothesis: visible progress lifts return rates.</p></div>
+    <div class="card"><span class="tag future">Capability</span><h3>Learning from behaviour</h3><p>What users complete, abandon, swap, regenerate and repeat. Hypothesis: needs data to prove.</p></div>
+  </div>
+  <p class="small" style="margin-top:16px">We say “see how far they've come”, never “get stronger” or “lose weight”. The product promises consistency and balance, not results.</p>
+</div></section>
+
+<section id="user"><div class="wrap">
+  <div class="num">04 · Target user and journey</div>
+  <h2>The frequent home exerciser</h2>
+  <p class="lede">Works out at home with YouTube 2–4 times a week, usually for 20–45 minutes. In the core base, 94% are women and 75% are aged 25–34.</p>
+  <div class="tablewrap"><table>
+    <tr><th>Stage</th><th>Today, on YouTube</th><th>With Fit My Day</th></tr>
+    <tr><td><b>Decide</b></td><td>5+ minutes searching, often repeats an old routine <span class="small">(frustrated)</span></td><td>Two required choices, a Stack in under 3 seconds <span class="small">(relieved)</span></td></tr>
+    <tr><td><b>Adjust</b></td><td>Hunts for a no-jump or no-equipment video <span class="small">(anxious)</span></td><td>Filters the rules guarantee, or told which filter blocks a result <span class="small">(trusting)</span></td></tr>
+    <tr><td><b>Work out</b></td><td>Fumbles between videos, does duration maths <span class="small">(distracted)</span></td><td>1–3 videos play in order <span class="small">(focused)</span></td></tr>
+    <tr><td><b>Finish</b></td><td>Nothing records how it went <span class="small">(flat)</span></td><td>Too easy / Just right / Too hard; History records it <span class="small">(accomplished)</span></td></tr>
+    <tr><td><b>Return</b></td><td>Starts from scratch again <span class="small">(tired of choosing)</span></td><td>Replays a saved Stack or builds a new one in seconds <span class="small">(in control)</span></td></tr>
+  </table></div>
+  <p class="small" style="margin-top:12px">Set aside for the MVP: beginners who need motivation, 30-day-programme followers, single-creator superfans, and people mixing gym and classes.</p>
+</div></section>
+
+<section id="competition"><div class="wrap">
+  <div class="num">05 · Competition and ecosystem</div>
+  <h2>The real competitor is “free and good enough”</h2>
+  <p class="lede">A playlist plus five minutes of scrolling costs nothing.</p>
+  <div class="tablewrap"><table>
+    <tr><th>Alternative</th><th>Strength</th><th>Where it falls short</th></tr>
+    <tr><td>YouTube playlists</td><td>Free; links across creators</td><td>Don't know what was completed; don't plan for today; don't learn</td></tr>
+    <tr><td>Creator apps (Pamela Reif, MadFit, Caroline Girvan, Chloe Ting)</td><td>Strong content and community</td><td>Single-creator by design; users mix styles across creators</td></tr>
+    <tr><td>Content-library apps (Peloton, Alo Moves, Down Dog, Sweat, Nüli)</td><td>Polished programmes</td><td>Closed libraries at $10–15/month; users must leave free creators they trust</td></tr>
+    <tr><td>General AI (ChatGPT)</td><td>Can plan a session</td><td>Knows only what you say, restarts every conversation, adds typing</td></tr>
+    <tr><td>Micro-tools (FitSaver, Yogly, MoveKit)</td><td>Organise or log workout videos</td><td>Near-zero traction; none closes the loop from planning to completion</td></tr>
+  </table></div>
+  <p class="small" style="margin-top:12px">Ecosystem lessons: grow through shared routines (Hevy), give partners a real incentive (Playbook), avoid a coaching payroll (Ladder), never build on another platform's data (Strava's 2026 API limits).</p>
+</div></section>
+
+<section id="system"><div class="wrap">
+  <div class="num">06 · AI system map</div>
+  <h2>Rules first — any AI must beat them in replay</h2>
+  <p class="lede">The MVP makes no LLM calls. A frozen, deterministic engine (Stack Generation Rules v0.2) builds every Stack. The LLM arrives later for three jobs only — explain, adapt and reflect — and never selects a video or enforces a constraint.</p>
+  <div class="flow"><span class="hi">Scenario</span><i>→</i><span>Eligibility gate (fail closed)</span><i>→</i><span>Hard filters</span><i>→</i><span>Score eligible videos</span><i>→</i><span>Pack 1–3 videos</span><i>→</i><span>Order low → high intensity</span><i>→</i><span>Revalidate</span><i>→</i><span class="hi">Stack or NO_VALID_STACK</span></div>
+  <div class="callout"><b>Core AI hypothesis.</b> If we deliver a ready-to-play sequence of 1–3 trusted videos, accurate enough that users start it without swapping (≥70%) and never see a violation of an applied constraint (100%), frequent home exercisers will press play within 60 seconds instead of spending 5–10 minutes deciding.</div>
+  <div class="tablewrap"><table>
+    <tr><th>Need</th><th>When</th><th>Tool</th><th>Why</th></tr>
+    <tr><td>Choose the videos for today's Stack</td><td><span class="tag mvp">MVP</span></td><td>Rules (v0.2)</td><td>Reproducible, testable, fails closed</td></tr>
+    <tr><td>Equipment and no-jumping filters</td><td><span class="tag mvp">MVP</span></td><td>Rules</td><td>0% violations; other filters wait for verified labels</td></tr>
+    <tr><td>Does this video need dumbbells?</td><td><span class="tag mvp">MVP</span></td><td>Database</td><td>A known, human-reviewed field</td></tr>
+    <tr><td>Learn from swaps, completion and feedback</td><td><span class="tag">Phase 1</span></td><td>Offline calibration, human-approved</td><td>Ships as a new rules_version after replay; no online learning</td></tr>
+    <tr><td>Tag new videos at scale</td><td><span class="tag">Later</span></td><td>Model with evidence + abstention; RAG over reviewed examples</td><td>Low-confidence labels go to humans</td></tr>
+    <tr><td>Explain why these videos</td><td><span class="tag future">Future</span></td><td>LLM from reason codes</td><td>Fills fields v0.2 reserves</td></tr>
+    <tr><td>Plan next week's sessions</td><td><span class="tag future">Future</span></td><td>LLM proposes inputs; engine selects</td><td>The coach never names a video</td></tr>
+    <tr><td>“Can I do this without a mat?”</td><td><span class="tag future">Future</span></td><td>RAG + LLM</td><td>Answers only from sources; pain questions get a fixed referral</td></tr>
+    <tr><td>Weekly reflection</td><td><span class="tag future">Future</span></td><td>Database + LLM</td><td>Database computes; LLM narrates without causal claims</td></tr>
+  </table></div>
+</div></section>
+
+<section id="models"><div class="wrap">
+  <div class="num">07 · Model selection</div>
+  <h2>The MVP needs no model at all</h2>
+  <p class="lede">Choices below apply to calibration and the three future LLM jobs. Criteria: accuracy against the bars, cost, latency, structured output and lock-in.</p>
+  <div class="tablewrap"><table>
+    <tr><th>Job</th><th>When</th><th>Approach</th><th>Guardrail</th></tr>
+    <tr><td>Stack generation</td><td>MVP</td><td>Frozen rules v0.2: coverage, style, energy fit, duration, capped popularity</td><td>Returns NO_VALID_STACK rather than relaxing a constraint</td></tr>
+    <tr><td>Scoring calibration</td><td>Phase 1</td><td>Offline replay of the scenario grid under old and new weights</td><td>Scoring layer only; floor of 30 sessions per scenario class</td></tr>
+    <tr><td>Video quality score</td><td>Phase 1</td><td>Completion normalised by position; shrunk estimate after 20 appearances</td><td>Capped at +5; a tie-breaker only</td></tr>
+    <tr><td>Automated tagging</td><td>Later</td><td>Fixed value, confidence and evidence; may abstain</td><td>Versions logged; low confidence to humans</td></tr>
+    <tr><td>Explain, adapt, reflect</td><td>Future</td><td>Small, fast LLM, cached</td><td>Writes only from logged data; never selects or filters</td></tr>
+    <tr><td>Recommender upgrade</td><td>Later</td><td>ALS or LightFM at ~1k–10k completions</td><td>Must beat v0.2 in replay</td></tr>
+  </table></div>
+</div></section>
+
+<section id="pipeline"><div class="wrap">
+  <div class="num">08 · Data pipeline</div>
+  <h2>Two loops: a verified catalogue and offline calibration</h2>
+  <p class="lede">Humans build a verified catalogue, and each session's events feed offline calibration — never live rankings.</p>
+  <div class="flow"><span class="hi">YouTube API metadata</span><i>→</i><span>Two blind reviewers</span><i>→</i><span>Verified catalogue</span><i>→</i><span>Rules engine v0.2</span><i>→</i><span>Sessions &amp; events</span><i>→</i><span>Offline calibration</span><i>→</i><span class="hi">New rules_version ↺</span></div>
+  <div class="tablewrap"><table>
+    <tr><th>Stage</th><th>What happens</th><th>Guardrail</th></tr>
+    <tr><td><b>Collect</b></td><td>Title, description, chapters, duration, embeddability via the YouTube API</td><td>Refresh or delete stored metadata within 30 days</td></tr>
+    <tr><td><b>Label</b></td><td>Two reviewers label independently, then adjudicate (Stage 1A: type, body focus; 1B: intensity, jumping, equipment)</td><td>Missing evidence never counts as “none”; unknown is allowed</td></tr>
+    <tr><td><b>Gate</b></td><td>Only available, embeddable, verified videos are eligible</td><td>Fails closed</td></tr>
+    <tr><td><b>Generate</b></td><td>Engine records a Decision Trace, rules_version and configuration ID</td><td>Same inputs, same Stack</td></tr>
+    <tr><td><b>Log</b></td><td>stack_generated (scores + top 20 eliminated), video_swapped, video_progress, feedback, stack_regenerated</td><td>Eliminated candidates are the only negative examples</td></tr>
+    <tr><td><b>Calibrate</b></td><td>Analyse a window, propose one change, replay, approve, version</td><td>Feedback never touches eligibility, constraints or labels</td></tr>
+  </table></div>
+</div></section>
+
+<section id="features"><div class="wrap">
+  <div class="num">09 · AI feature deep dives</div>
+  <h2>Three future LLM jobs: explain, adapt, reflect</h2>
+  <p class="lede">Each is tested against the frozen rules baseline. None is in the Demo Day build.</p>
+  <div class="grid">
+    <div class="card"><span class="tag future">A · Explain</span><h3>LLM from reason codes</h3>
+      <p><b>Hypothesis:</b> a short explanation written only from the engine's reason codes lifts swap-free starts.</p>
+      <ul><li>Every sentence maps to a reason code; no outcome claims</li><li>Template fallback above a daily budget; cached per Stack</li><li>Eval: faithfulness audit + A/B on swap-free starts</li><li>Cost: ~0.1p per Stack</li></ul></div>
+    <div class="card"><span class="tag future">B · Adapt</span><h3>Weekly adaptive coach</h3>
+      <p><b>Hypothesis:</b> turning a learned profile into next week's session shapes lifts week-4 and week-8 return.</p>
+      <ul><li>Outputs scenario inputs only — never names a video</li><li>Profile visible and editable; no health inference</li><li>Eval: return with vs without; small paid cohort; LLM vs rules-only planner</li></ul></div>
+    <div class="card"><span class="tag future">C · Reflect</span><h3>Progress narration</h3>
+      <p><b>Hypothesis:</b> honest narration from session logs shows progress YouTube never shows.</p>
+      <ul><li>Two lines and one suggestion a week</li><li>No causal claim unless the confounder is controlled</li><li>Eval: claim-level audit; week-4 return with vs without</li></ul></div>
+  </div>
+</div></section>
+
+<section id="eval"><div class="wrap">
+  <div class="num">10 · Evaluation plan</div>
+  <h2>Three layers, each gating the next</h2>
+  <p class="lede">A 0% violation rate proves the engine obeyed its tags — not that the tags were right.</p>
+  <div class="tablewrap"><table>
+    <tr><th>Layer</th><th>Question</th><th>Method</th><th>Bar</th></tr>
+    <tr><td><b>0. Constraint test</b></td><td>Did the engine obey the tags?</td><td>Automated test on every rules_version</td><td class="n">0% violations</td></tr>
+    <tr><td><b>1. Tag accuracy</b></td><td>Are the tags right?</td><td>Golden set: frozen 50 videos, two blind reviewers, adjudication</td><td>Recall + error direction for safety fields; ~90% descriptive</td></tr>
+    <tr><td><b>2. Stack coherence</b></td><td>Would you press play?</td><td>Adversarial n = 30 Stacks with target users, pass/fail rubric</td><td>24–27 passes = pilot-ready; ≤18 = stop and fix</td></tr>
+    <tr><td><b>In product</b></td><td>Does it work for real?</td><td>Swaps by position, completion, return</td><td>Swap-free ≥70%, first-Stack completion ≥60%, week-2 return ≥40%, time to play &lt;60 s</td></tr>
+  </table></div>
+  <div class="callout warn">Thresholds are written before results arrive, one rule changes per run, and completion alone is not accuracy — optimising it would push shorter, easier sessions. At n = 50, 90% accuracy carries about ±9 points, so no external accuracy claim until ~200.</div>
+</div></section>
+
+<section id="results"><div class="wrap">
+  <div class="num">11 · Results and PoC</div>
+  <h2>Two results so far; the rest waits for measurement</h2>
+  <div class="grid">
+    <div class="card"><span class="tag mvp">Done</span><h3>Rules engine v0.2 frozen</h3><p>Approved by Product, Engineering and Data Science. 127 tests independently verified and implemented in the develop branch.</p></div>
+    <div class="card"><span class="tag mvp">Done</span><h3>Golden set Stage 1A</h3><p>50 videos frozen; workout type and body focus labelled by two reviewers and signed off. Stage 1B adds intensity, jumping and equipment.</p></div>
+    <div class="card"><span class="tag">Next</span><h3>Coherence test + Demo Day</h3><p>Adversarial n = 30 test, then median time to play, swap-free start rate, violations and first-Stack completion.</p></div>
+  </div>
+</div></section>
+
+<section id="progress"><div class="wrap">
+  <div class="num">12 · Progress features</div>
+  <h2>Progress recorded with no manual logging</h2>
+  <p class="lede">Because Fit My Day plays the workout, it knows what was done. Progress means consistency and capability — never weight or body change.</p>
+  <div class="grid">
+    <div class="card"><h3>Times done</h3><p>“Done 7 times” — repeat plays are the strongest positive signal.</p></div>
+    <div class="card"><h3>Weekly balance</h3><p>Minutes and mix across body parts and styles. No streaks.</p></div>
+    <div class="card"><h3>Difficulty trend</h3><p>Too easy / Just right / Too hard over time, per energy level.</p></div>
+    <div class="card"><h3>Trained elsewhere</h3><p>One tap adjusts the next home Stack — no tracking.</p></div>
+  </div>
+</div></section>
+
+<section id="why"><div class="wrap">
+  <div class="num">13 · Why Fit My Day, not YouTube</div>
+  <h2>YouTube optimises for watch time. We optimise for workouts finished.</h2>
+  <div class="grid">
+    <div class="card"><span class="tag">Trigger</span><p>“I want to work out but don't know what.” Under 60 seconds vs 5+ minutes.</p></div>
+    <div class="card"><span class="tag">Action</span><p>Two required choices (time, body part), two optional.</p></div>
+    <div class="card"><span class="tag">Reward</span><p>A session that fits today, guaranteed filters, one-tap replay.</p></div>
+    <div class="card"><span class="tag">Investment</span><p>History and saved Stacks live here; each calibrated release improves Stacks for everyone.</p></div>
+  </div>
+  <p class="small" style="margin-top:16px">North Star: completed Stacks per weekly active user. Guardrails: no streaks or guilt — a missed session feeds next week's plan, never a penalty.</p>
+</div></section>
+
+<section id="business"><div class="wrap">
+  <div class="num">14 · Business model</div>
+  <h2>Free MVP; test whether users pay for memory</h2>
+  <div class="grid">
+    <div class="card"><span class="tag mvp">Free</span><p>Today's session, swaps, filters, History, Discover and sharing.</p></div>
+    <div class="card"><span class="tag future">Premium candidates</span><p>Weekly adaptive coach, unlimited personalised Stacks, progress narration — tested with a small paid cohort in Phase 3.</p></div>
+    <div class="card"><span class="tag">Never sold</span><p>Ad removal or offline playback — blocking ads breaks YouTube's terms.</p></div>
+  </div>
+  <p class="small" style="margin-top:16px">Unit cost: zero LLM cost in the MVP; ~£0.013 per user per month once explanations launch. Human review is already 80%+ of operating cost, so review efficiency matters more than model price.</p>
+</div></section>
+
+<section id="roadmap"><div class="wrap">
+  <div class="num">15 · Roadmap and growth loop</div>
+  <h2>Each phase is built only once the previous gate is passed</h2>
+  <div class="tablewrap"><table>
+    <tr><th>Phase</th><th>Build</th><th>Gate before the next phase</th></tr>
+    <tr><td class="n">0 · Now → Demo Day</td><td>MVP plus the logging spec</td><td>Events land correctly and join per session</td></tr>
+    <tr><td class="n">1 · After Demo Day</td><td>Analyse first window; quality score; calibrate weights</td><td>Stacks get completed; swap-free starts reach 70%</td></tr>
+    <tr><td class="n">2</td><td>Learned profile, visible and editable</td><td>Users return without prompting (week 4)</td></tr>
+    <tr><td class="n">3</td><td>Weekly coach with forward commitment</td><td>Users pay for memory (paid cohort)</td></tr>
+    <tr><td class="n">4</td><td>Progress narration</td><td>Enough history for honest claims</td></tr>
+  </table></div>
+  <div class="flow"><span class="hi">Sessions</span><i>→</i><span>Event log</span><i>→</i><span>Calibrated rules_version</span><i>→</i><span>Better Stacks for everyone</span><i>↺</i><span>Learned profile</span><i>→</i><span class="hi">Coach plans the week</span></div>
+</div></section>
+
+<section id="risks"><div class="wrap">
+  <div class="num">16 · Risks and decisions</div>
+  <h2>Platform dependency is the largest risk</h2>
+  <div class="tablewrap" style="margin-bottom:28px"><table>
+    <tr><th>Risk</th><th>Why it matters</th><th>Mitigation</th></tr>
+    <tr><td><b>Platform dependency</b></td><td>YouTube can change its terms; Musi was removed from the App Store in 2024</td><td>Official embeds only, no ad interference, 30-day metadata refresh</td></tr>
+    <tr><td><b>Wrong labels behind a perfect score</b></td><td>A mislabelled jumping video still reaches a user</td><td>Layer 1 gates Layer 2; unknown fails closed</td></tr>
+    <tr><td><b>Data advantage unproven</b></td><td>Holding data is not a moat until it improves Stacks</td><td>Replay every change vs frozen v0.2; phase gates</td></tr>
+  </table></div>
+  <h3>Key decisions</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Option</th><th>Decision</th><th>Instead</th><th>Reason</th></tr>
+    <tr><td>LLM chooses the videos</td><td>Rejected</td><td>Frozen deterministic engine; LLM explains, adapts, reflects later</td><td>Reproducible and testable; safety cannot depend on a probabilistic model</td></tr>
+    <tr><td>Noise, knee, wrist, impact filters in MVP</td><td>Deferred</td><td>Equipment and no jumping only</td><td>Unverified labels would break the 0% promise</td></tr>
+    <tr><td>Online learning from feedback</td><td>Rejected</td><td>Offline calibration as an approved rules_version</td><td>Rankings must not drift; every change reversible</td></tr>
+    <tr><td>Ad-free or offline premium</td><td>Rejected</td><td>Premium sells memory and progress</td><td>Blocking ads breaks YouTube's terms (Musi precedent)</td></tr>
+    <tr><td>RAG over YouTube comments</td><td>Rejected</td><td>First-party behaviour and feedback</td><td>YouTube policy bans derived data</td></tr>
+    <tr><td>Strava data for AI</td><td>Rejected</td><td>Apple Health / Health Connect, later</td><td>Strava's API terms ban use in AI models</td></tr>
+    <tr><td>Open-ended chat coach</td><td>Rejected</td><td>Coach proposes scenario inputs only</td><td>The product is a quick ritual, not a conversation</td></tr>
+  </table></div>
+</div></section>
+
+</main>
+
+<footer><div class="wrap">
+  Jenny Hsiao · AI Product Manager · <a href="index.html">JKOPay O2O case study →</a><br>
+  <span class="small">Sources: Fit My Day MVP Master PRD, Product Strategy V1, Stack Generation Rules v0.2, Human Review Protocol v2, Feedback Loop v0.1 draft, August 2026 survey (61 responses).</span>
+</div></footer>
+
+</body>
+</html>
